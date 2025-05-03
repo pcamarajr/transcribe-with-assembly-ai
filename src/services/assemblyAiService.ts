@@ -32,8 +32,9 @@ export const uploadAudioFile = async (file: File): Promise<string> => {
   if (!client) throw new Error('API key not set');
 
   try {
-    const upload = await client.files.upload(file);
-    return upload.id;
+    // The upload method directly returns a string in v4 of the SDK
+    const audioUrl = await client.files.upload(file);
+    return audioUrl; // This is already the string we need
   } catch (error) {
     console.error('Error uploading file:', error);
     throw error;
