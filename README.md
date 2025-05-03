@@ -1,73 +1,57 @@
-# Welcome to your Lovable project
+# Audio Scribe
 
-## Project info
+[![Production Site](https://img.shields.io/badge/Live%20App-transcribe.pcamarajr.dev-blue?style=flat-square)](https://transcribe.pcamarajr.dev/)
 
-**URL**: https://lovable.dev/projects/14f6396e-2c01-447b-a88b-e6f75e38915b
+Audio Scribe is a simple, open, and user-friendly web app for transcribing audio files using [AssemblyAI](https://www.assemblyai.com/). The goal is to make high-quality speech-to-text accessible to everyone—just create an AssemblyAI API key and start transcribing, no hassle or setup required.
 
-## How can I edit this code?
+## 🚀 Production URL
 
-There are several ways of editing your application.
+- **Live App:** [https://transcribe.pcamarajr.dev/](https://transcribe.pcamarajr.dev/)
 
-**Use Lovable**
+## ✨ Purpose
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/14f6396e-2c01-447b-a88b-e6f75e38915b) and start prompting.
+Audio Scribe is designed to:
 
-Changes made via Lovable will be committed automatically to this repo.
+- Remove the friction of using AssemblyAI for audio transcription
+- Require only your API key—no signup, no backend, no extra steps
+- Provide a clean, modern, and responsive interface for uploading audio and viewing transcripts
 
-**Use your preferred IDE**
+## 🛠️ Features
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **API Key Management:** Securely store your AssemblyAI API key in your browser (localStorage)
+- **Audio Upload:** Drag-and-drop or select audio files (MP3, WAV, M4A, etc.)
+- **Transcription:** Instantly request and track transcriptions via AssemblyAI
+- **Transcript Management:** View, copy, and manage all your transcripts in one place
+- **Modern UI:** Built with shadcn-ui, Radix UI, and Tailwind CSS for a great user experience
+- **No Backend Required:** All processing happens client-side with your API key
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 📚 Documentation
 
-Follow these steps:
+Full documentation is available in the [`documents/`](./documents) folder, including:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- [Overview](./documents/overview.md)
+- [Features](./documents/features.md)
+- [Architecture](./documents/architecture.md)
+- [API Integration](./documents/api-integration.md)
+- [UI Components](./documents/ui-components.md)
+- [Extending the App](./documents/extending.md)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🧑‍💻 Technologies Used
 
-# Step 3: Install the necessary dependencies.
-npm i
+- [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/) (build tool)
+- [Tailwind CSS](https://tailwindcss.com/) (utility-first styling)
+- [shadcn-ui](https://ui.shadcn.com/) & [Radix UI](https://www.radix-ui.com/) (UI components)
+- [AssemblyAI SDK](https://www.assemblyai.com/)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## 🎉 Credits
 
-**Edit a file directly in GitHub**
+This project was built using [Lovable.dev](https://lovable.dev/), which provided the initial setup and tools for rapid development.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🪪 License
 
-**Use GitHub Codespaces**
+This project is **free to use, extend, and modify for any purpose**. The only requirement is to provide credit by linking to the [Github Repository](https://github.com/pcamarajr/transcribe-with-assembly-ai).
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/14f6396e-2c01-447b-a88b-e6f75e38915b) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Enjoy simple, powerful audio transcription with Audio Scribe!
