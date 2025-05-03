@@ -5,15 +5,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FileAudio, Upload } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
+import { uploadAudioFile } from '@/services/assemblyAiService';
 
 interface AudioUploaderProps {
-  onAudioUploaded: (file: File) => void;
+  onAudioUploaded: (file: File, fileId: string) => void;
 }
 
 const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -26,7 +28,7 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
     setIsDragging(false);
   };
 
-  const processFile = (file: File) => {
+  const processFile = async (file: File) => {
     // Check if file is audio
     if (!file.type.startsWith('audio/')) {
       toast({
@@ -38,39 +40,65 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
     }
 
     setUploadedFile(file);
+    setIsUploading(true);
     
-    // Simulate upload progress
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 10;
-      setUploadProgress(progress);
+    try {
+      // Start simulating upload progress for UI feedback
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += 5;
+        if (progress <= 90) {  // Only go up to 90% during the actual upload
+          setUploadProgress(progress);
+        }
+      }, 100);
       
-      if (progress >= 100) {
-        clearInterval(interval);
-        onAudioUploaded(file);
-      }
-    }, 100);
+      // Upload file to AssemblyAI
+      const fileId = await uploadAudioFile(file);
+      
+      // Upload complete, set to 100%
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+      
+      toast({
+        title: "Upload Completo",
+        description: "Arquivo enviado com sucesso para transcrição."
+      });
+      
+      onAudioUploaded(file, fileId);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Erro no upload",
+        description: "Ocorreu um erro ao enviar o arquivo. Verifique sua chave API e tente novamente."
+      });
+      setUploadedFile(null);
+      setUploadProgress(0);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
     
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    if (!isUploading && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
       processFile(file);
     }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
+    if (!isUploading && e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       processFile(file);
     }
   };
 
   const triggerFileInput = () => {
-    fileInputRef.current?.click();
+    if (!isUploading) {
+      fileInputRef.current?.click();
+    }
   };
 
   return (
@@ -91,6 +119,7 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
             className="hidden" 
             accept="audio/*" 
             onChange={handleFileSelect}
+            disabled={isUploading}
           />
           
           {!uploadedFile ? (
@@ -112,17 +141,17 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
               <div className="mx-auto max-w-md">
                 <Progress value={uploadProgress} className="h-2" />
               </div>
-              {uploadProgress < 100 && (
-                <p className="text-sm text-gray-500 mt-2">Processando...</p>
+              {isUploading && (
+                <p className="text-sm text-gray-500 mt-2">Enviando para AssemblyAI...</p>
               )}
-              {uploadProgress === 100 && (
-                <p className="text-sm text-green-600 mt-2">Arquivo pronto!</p>
+              {uploadProgress === 100 && !isUploading && (
+                <p className="text-sm text-green-600 mt-2">Arquivo enviado com sucesso!</p>
               )}
             </div>
           )}
         </div>
 
-        {!uploadedFile && (
+        {!uploadedFile && !isUploading && (
           <Button 
             className="mt-4 w-full"
             onClick={triggerFileInput}
