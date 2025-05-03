@@ -29,6 +29,7 @@ const FilesViewer: React.FC<FilesViewerProps> = ({ onTranscriptionRequested, ref
       const filesData = await listFiles();
       setFiles(filesData);
     } catch (error) {
+      console.error('Error listing files:', error);
       toast({
         variant: "destructive",
         title: "Erro ao carregar arquivos",

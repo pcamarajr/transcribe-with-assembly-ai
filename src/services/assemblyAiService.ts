@@ -1,5 +1,5 @@
 
-import { AssemblyAI } from "assemblyai";
+import { AssemblyAI, FileUploadData, TranscribeParams, SpeechModel } from "assemblyai";
 
 // Function to get API key from local storage
 export const getApiKey = (): string | null => {
@@ -32,7 +32,7 @@ export const uploadAudioFile = async (file: File): Promise<string> => {
   if (!client) throw new Error('API key not set');
 
   try {
-    const upload = await client.files.upload({ file });
+    const upload = await client.files.upload(file);
     return upload.id;
   } catch (error) {
     console.error('Error uploading file:', error);
@@ -46,13 +46,12 @@ export const requestTranscription = async (fileId: string, language: string = 'p
   if (!client) throw new Error('API key not set');
 
   try {
-    const data = {
+    const params: TranscribeParams = {
       audio: fileId,
-      speech_model: "universal",
       language_code: language,
     };
     
-    const transcript = await client.transcripts.transcribe(data);
+    const transcript = await client.transcripts.transcribe(params);
     return transcript.id;
   } catch (error) {
     console.error('Error requesting transcription:', error);
@@ -83,8 +82,20 @@ export const listFiles = async (): Promise<any[]> => {
   if (!client) throw new Error('API key not set');
 
   try {
-    const files = await client.files.list({ limit: 100 });
-    return files.files;
+    // Use the correct API to get files
+    // According to AssemblyAI v4 API, we need to use a different approach
+    // Using transcripts to get the uploaded files
+    const transcripts = await client.transcripts.list({ limit: 100 });
+    
+    // Map the transcripts to get file information
+    const files = transcripts.transcripts.map(transcript => ({
+      id: transcript.id,
+      filename: transcript.audio_url.split('/').pop() || transcript.id,
+      audio_url: transcript.audio_url,
+      created_at: transcript.created,
+    }));
+    
+    return files;
   } catch (error) {
     console.error('Error listing files:', error);
     throw error;
