@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { hasApiKey } from "@/services/assemblyAiService";
-import { FileAudio, FileText, Settings } from "lucide-react";
+import { FileAudio, FileText, Github, Globe, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Index = () => {
@@ -152,9 +152,32 @@ const Index = () => {
 
       <footer className="bg-gray-50 border-t py-6">
         <div className="container">
-          <p className="text-center text-gray-500 text-sm">
-            © 2025 Audio Scribe • Transcrição de áudio com AssemblyAI
-          </p>
+          <div className="flex flex-col items-center space-y-4">
+            <p className="text-center text-gray-500 text-sm">
+              © 2025 Audio Scribe • Transcrição de áudio com AssemblyAI
+            </p>
+            <div className="flex items-center space-x-4">
+              <a
+                href="https://pcamarajr.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-brand-500 transition-colors flex items-center"
+              >
+                <Globe className="h-4 w-4 mr-1" />
+                <span className="text-sm">pcamarajr.dev</span>
+              </a>
+              <span className="text-gray-300">•</span>
+              <a
+                href="https://github.com/pcamarajr/transcribe-with-assembly-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-brand-500 transition-colors flex items-center"
+              >
+                <Github className="h-4 w-4 mr-1" />
+                <span className="text-sm">GitHub</span>
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
