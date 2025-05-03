@@ -2,20 +2,21 @@
 import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { FileAudio, Upload } from "lucide-react";
+import { FileAudio, Upload, Loader } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
-import { uploadAudioFile } from '@/services/assemblyAiService';
+import { uploadAndTranscribe } from '@/services/assemblyAiService';
 
 interface AudioUploaderProps {
-  onAudioUploaded: (file: File, fileId: string) => void;
+  onTranscriptionRequested: (transcriptId: string) => void;
 }
 
-const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
+const AudioUploader: React.FC<AudioUploaderProps> = ({ onTranscriptionRequested }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -53,18 +54,25 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
       }, 100);
       
       // Upload file to AssemblyAI
-      const fileId = await uploadAudioFile(file);
-      
-      // Upload complete, set to 100%
+      setUploadProgress(50);
       clearInterval(progressInterval);
+      
+      // Show transcribing state
+      setIsTranscribing(true);
+      
+      // Upload and immediately request transcription
+      const transcriptId = await uploadAndTranscribe(file);
+      
+      // Upload and transcription request complete
       setUploadProgress(100);
+      setIsTranscribing(false);
       
       toast({
-        title: "Upload Completo",
-        description: "Arquivo enviado com sucesso para transcrição."
+        title: "Requisição enviada",
+        description: "Arquivo enviado e transcrição solicitada com sucesso."
       });
       
-      onAudioUploaded(file, fileId);
+      onTranscriptionRequested(transcriptId);
     } catch (error) {
       toast({
         variant: "destructive",
@@ -73,6 +81,7 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
       });
       setUploadedFile(null);
       setUploadProgress(0);
+      setIsTranscribing(false);
     } finally {
       setIsUploading(false);
     }
@@ -141,11 +150,17 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({ onAudioUploaded }) => {
               <div className="mx-auto max-w-md">
                 <Progress value={uploadProgress} className="h-2" />
               </div>
-              {isUploading && (
+              {isUploading && !isTranscribing && (
                 <p className="text-sm text-gray-500 mt-2">Enviando para AssemblyAI...</p>
               )}
-              {uploadProgress === 100 && !isUploading && (
-                <p className="text-sm text-green-600 mt-2">Arquivo enviado com sucesso!</p>
+              {isTranscribing && (
+                <p className="text-sm text-amber-500 mt-2 flex items-center justify-center">
+                  <Loader className="h-4 w-4 mr-2 animate-spin" />
+                  Solicitando transcrição...
+                </p>
+              )}
+              {uploadProgress === 100 && !isUploading && !isTranscribing && (
+                <p className="text-sm text-green-600 mt-2">Transcrição solicitada com sucesso!</p>
               )}
             </div>
           )}

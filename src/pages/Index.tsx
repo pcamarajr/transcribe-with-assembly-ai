@@ -3,27 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AudioUploader from "@/components/AudioUploader";
 import ApiKeyForm from "@/components/ApiKeyForm";
-import FilesViewer from "@/components/FilesViewer";
 import TranscriptsViewer from "@/components/TranscriptsViewer";
-import { Button } from "@/components/ui/button";
-import { FileAudio, FileText, List } from "lucide-react";
+import { FileAudio, FileText } from "lucide-react";
 import { hasApiKey } from '@/services/assemblyAiService';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<string>('upload');
   const [isApiKeySet, setIsApiKeySet] = useState<boolean>(hasApiKey());
-  const [refreshFilesCounter, setRefreshFilesCounter] = useState<number>(0);
   const [refreshTranscriptsCounter, setRefreshTranscriptsCounter] = useState<number>(0);
   const [currentTranscriptId, setCurrentTranscriptId] = useState<string | undefined>();
 
   const handleApiKeySet = () => {
     setIsApiKeySet(true);
-  };
-
-  const handleAudioUploaded = (file: File, fileId: string) => {
-    // When a file is uploaded, refresh the files list
-    setRefreshFilesCounter(prev => prev + 1);
-    setActiveTab('files');
   };
 
   const handleTranscriptionRequested = (transcriptId: string) => {
@@ -67,12 +58,9 @@ const Index = () => {
             </div>
           ) : (
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-3 mb-8">
+              <TabsList className="grid grid-cols-2 mb-8">
                 <TabsTrigger value="upload" className="flex items-center">
                   <FileAudio className="w-4 h-4 mr-2" /> Upload
-                </TabsTrigger>
-                <TabsTrigger value="files" className="flex items-center">
-                  <List className="w-4 h-4 mr-2" /> Arquivos
                 </TabsTrigger>
                 <TabsTrigger value="transcripts" className="flex items-center">
                   <FileText className="w-4 h-4 mr-2" /> Transcrições
@@ -84,20 +72,13 @@ const Index = () => {
                   <div 
                     className="h-1 bg-brand-500 transition-all duration-300" 
                     style={{ 
-                      width: activeTab === 'upload' ? '33%' : activeTab === 'files' ? '66%' : '100%' 
+                      width: activeTab === 'upload' ? '50%' : '100%' 
                     }} 
                   />
                 </div>
                 
                 <TabsContent value="upload" className="p-4 mt-4">
-                  <AudioUploader onAudioUploaded={handleAudioUploaded} />
-                </TabsContent>
-                
-                <TabsContent value="files" className="p-4 mt-4">
-                  <FilesViewer 
-                    onTranscriptionRequested={handleTranscriptionRequested}
-                    refreshTrigger={refreshFilesCounter}
-                  />
+                  <AudioUploader onTranscriptionRequested={handleTranscriptionRequested} />
                 </TabsContent>
                 
                 <TabsContent value="transcripts" className="p-4 mt-4">

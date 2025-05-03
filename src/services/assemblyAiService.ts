@@ -26,36 +26,25 @@ export const createClient = (): AssemblyAI | null => {
   });
 };
 
-// Function to upload audio file to AssemblyAI
-export const uploadAudioFile = async (file: File): Promise<string> => {
+// Function to upload audio file to AssemblyAI and immediately request transcription
+export const uploadAndTranscribe = async (file: File, language: string = 'pt'): Promise<string> => {
   const client = createClient();
   if (!client) throw new Error('API key not set');
 
   try {
-    // The upload method directly returns a string in v4 of the SDK
+    // Upload the file
     const audioUrl = await client.files.upload(file);
-    return audioUrl; // This is already the string we need
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    throw error;
-  }
-};
-
-// Function to request transcription
-export const requestTranscription = async (fileId: string, language: string = 'pt'): Promise<string> => {
-  const client = createClient();
-  if (!client) throw new Error('API key not set');
-
-  try {
+    
+    // Immediately request transcription
     const params: TranscribeParams = {
-      audio: fileId,
+      audio: audioUrl,
       language_code: language,
     };
     
     const transcript = await client.transcripts.transcribe(params);
     return transcript.id;
   } catch (error) {
-    console.error('Error requesting transcription:', error);
+    console.error('Error uploading and transcribing file:', error);
     throw error;
   }
 };
@@ -73,32 +62,6 @@ export const getTranscription = async (transcriptId: string): Promise<{ status: 
     };
   } catch (error) {
     console.error('Error getting transcription:', error);
-    throw error;
-  }
-};
-
-// Function to list all uploaded files
-export const listFiles = async (): Promise<any[]> => {
-  const client = createClient();
-  if (!client) throw new Error('API key not set');
-
-  try {
-    // Use the correct API to get files
-    // According to AssemblyAI v4 API, we need to use a different approach
-    // Using transcripts to get the uploaded files
-    const transcripts = await client.transcripts.list({ limit: 100 });
-    
-    // Map the transcripts to get file information
-    const files = transcripts.transcripts.map(transcript => ({
-      id: transcript.id,
-      filename: transcript.audio_url.split('/').pop() || transcript.id,
-      audio_url: transcript.audio_url,
-      created_at: transcript.created,
-    }));
-    
-    return files;
-  } catch (error) {
-    console.error('Error listing files:', error);
     throw error;
   }
 };
