@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { uploadAndTranscribe } from "@/services/assemblyAiService";
 import { Check, Clock, FileAudio, Loader, Upload } from "lucide-react";
 import React, { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import TranscriptStatusBadge from "./transcripts/TranscriptStatusBadge";
 
 interface AudioUploaderProps {
@@ -14,6 +15,7 @@ interface AudioUploaderProps {
 const AudioUploader: React.FC<AudioUploaderProps> = ({
   onTranscriptionRequested,
 }) => {
+  const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -38,7 +40,7 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
     if (!file.type.startsWith("audio/")) {
       toast({
         variant: "destructive",
-        title: "Arquivo inválido",
+        title: t("apiKey.error"),
         description: "Por favor, envie apenas arquivos de áudio.",
       });
       return;
@@ -76,9 +78,8 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
       setCurrentStatus("queued");
 
       toast({
-        title: "Transcrevendo áudio",
-        description:
-          "Arquivo enviado e transcrição iniciada. Você será redirecionado para acompanhar o progresso.",
+        title: t("upload.transcriptionRequested"),
+        description: t("upload.transcriptionRequestedDesc"),
       });
 
       // Switch to the transcriptions tab immediately
@@ -86,9 +87,8 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Erro no upload",
-        description:
-          "Ocorreu um erro ao enviar o arquivo. Verifique sua chave API e tente novamente.",
+        title: t("apiKey.error"),
+        description: t("apiKey.uploadError"),
       });
       setUploadedFile(null);
       setUploadProgress(0);
@@ -132,14 +132,14 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
         return (
           <p className="text-sm text-blue-500 mt-2 flex items-center justify-center">
             <Loader className="h-4 w-4 mr-2 animate-spin" />
-            Enviando arquivo ({Math.round(uploadProgress)}%)...
+            {t("upload.uploading")} ({Math.round(uploadProgress)}%)...
           </p>
         );
       case "requesting":
         return (
           <p className="text-sm text-amber-500 mt-2 flex items-center justify-center">
             <Loader className="h-4 w-4 mr-2 animate-spin" />
-            Iniciando transcrição...
+            {t("upload.initiatingTranscription")}
           </p>
         );
       case "queued":
@@ -148,11 +148,12 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
             <p className="text-sm flex items-center justify-center">
               <Clock className="h-4 w-4 mr-2 text-blue-500" />
               <span>
-                Status: <TranscriptStatusBadge status="queued" />
+                {t("transcriptions.status")}{" "}
+                <TranscriptStatusBadge status="queued" />
               </span>
             </p>
             <p className="text-xs text-gray-500 mt-1 text-center">
-              Você será redirecionado para a guia de transcrições
+              {t("upload.transcriptionQueued")}
             </p>
           </div>
         );
@@ -162,12 +163,12 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
             <p className="text-sm flex items-center justify-center">
               <Loader className="h-4 w-4 mr-2 animate-spin text-amber-500" />
               <span>
-                Status: <TranscriptStatusBadge status="processing" />
+                {t("transcriptions.status")}{" "}
+                <TranscriptStatusBadge status="processing" />
               </span>
             </p>
             <p className="text-xs text-gray-500 mt-1 text-center">
-              A transcrição está sendo processada. Você pode verificar o status
-              na guia de transcrições.
+              {t("upload.transcriptionProcessing")}
             </p>
           </div>
         );
@@ -176,7 +177,8 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
           <p className="text-sm text-green-600 mt-2 flex items-center justify-center">
             <Check className="h-4 w-4 mr-2" />
             <span>
-              Status: <TranscriptStatusBadge status="completed" />
+              {t("transcriptions.status")}{" "}
+              <TranscriptStatusBadge status="completed" />
             </span>
           </p>
         );
@@ -212,10 +214,10 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
             <div className="cursor-pointer">
               <FileAudio className="h-12 w-12 mx-auto text-brand-500 mb-4" />
               <p className="font-medium text-lg text-gray-700 mb-1">
-                Arraste e solte um arquivo de áudio ou clique para escolher
+                {t("upload.dragDrop")}
               </p>
               <p className="text-gray-500 text-sm">
-                Formatos suportados: MP3, WAV, M4A, etc.
+                {t("upload.supportedFormats")}
               </p>
             </div>
           ) : (
@@ -235,7 +237,7 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
 
         {!uploadedFile && !isUploading && (
           <Button className="mt-4 w-full" onClick={triggerFileInput}>
-            <Upload className="w-4 h-4 mr-2" /> Selecionar arquivo
+            <Upload className="w-4 h-4 mr-2" /> {t("upload.selectFile")}
           </Button>
         )}
       </CardContent>

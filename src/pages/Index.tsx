@@ -9,12 +9,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { hasApiKey } from "@/services/assemblyAiService";
-import { FileAudio, FileText, Github, Globe, Settings } from "lucide-react";
+import { FileAudio, FileText, Github, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>("upload");
   const [isApiKeySet, setIsApiKeySet] = useState<boolean>(hasApiKey());
   const [refreshTranscriptsCounter, setRefreshTranscriptsCounter] =
@@ -52,40 +55,40 @@ const Index = () => {
         <div className="container py-4 flex items-center justify-between">
           <div className="flex items-center">
             <FileAudio className="h-6 w-6 text-brand-500 mr-2" />
-            <h1 className="text-xl font-semibold">Audio Scribe</h1>
+            <h1 className="text-xl font-semibold">{t("appName")}</h1>
           </div>
-          {isApiKeySet && (
-            <Dialog
-              open={isApiKeyDialogOpen}
-              onOpenChange={setIsApiKeyDialogOpen}
-            >
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="flex items-center gap-2"
-                >
-                  <Settings className="h-4 w-4" />
-                  <span className="text-sm">Configurar API</span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Configurações da API</DialogTitle>
-                </DialogHeader>
-                <div className="py-4">
-                  <ApiKeyForm
-                    onKeySet={handleApiKeySet}
-                    onKeyRemoved={handleApiKeyRemoved}
-                  />
-                </div>
-              </DialogContent>
-            </Dialog>
-          )}
+          <div className="flex items-center space-x-2">
+            {isApiKeySet && (
+              <Dialog
+                open={isApiKeyDialogOpen}
+                onOpenChange={setIsApiKeyDialogOpen}
+              >
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex items-center gap-2"
+                  >
+                    <Settings className="h-4 w-4" />
+                    <span className="text-sm">{t("header.configureApi")}</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>{t("apiKey.title")}</DialogTitle>
+                  </DialogHeader>
+                  <div className="py-4">
+                    <ApiKeyForm
+                      onKeySet={handleApiKeySet}
+                      onKeyRemoved={handleApiKeyRemoved}
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
+            )}
+          </div>
           <div>
-            <span className="text-sm text-gray-500">
-              Transcrição simples com AssemblyAI
-            </span>
+            <span className="text-sm text-gray-500">{t("appTagline")}</span>
           </div>
         </div>
       </header>
@@ -93,12 +96,9 @@ const Index = () => {
       <main className="flex-1 container py-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-2">
-            Transcreva áudio facilmente
+            {t("main.title")}
           </h1>
-          <p className="text-gray-500 text-center mb-8">
-            Carregue seu arquivo de áudio e receba uma transcrição de alta
-            qualidade usando AssemblyAI
-          </p>
+          <p className="text-gray-500 text-center mb-8">{t("main.subtitle")}</p>
 
           {!isApiKeySet ? (
             <div className="mb-8">
@@ -115,10 +115,11 @@ const Index = () => {
             >
               <TabsList className="grid grid-cols-2 mb-8">
                 <TabsTrigger value="upload" className="flex items-center">
-                  <FileAudio className="w-4 h-4 mr-2" /> Upload
+                  <FileAudio className="w-4 h-4 mr-2" /> {t("upload.tab")}
                 </TabsTrigger>
                 <TabsTrigger value="transcripts" className="flex items-center">
-                  <FileText className="w-4 h-4 mr-2" /> Transcrições
+                  <FileText className="w-4 h-4 mr-2" />{" "}
+                  {t("transcriptions.tab")}
                 </TabsTrigger>
               </TabsList>
 
@@ -150,33 +151,32 @@ const Index = () => {
         </div>
       </main>
 
-      <footer className="bg-gray-50 border-t py-6">
-        <div className="container">
-          <div className="flex flex-col items-center space-y-4">
-            <p className="text-center text-gray-500 text-sm">
-              © 2025 Audio Scribe • Transcrição de áudio com AssemblyAI
-            </p>
-            <div className="flex items-center space-x-4">
-              <a
-                href="https://pcamarajr.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-500 hover:text-brand-500 transition-colors flex items-center"
-              >
-                <Globe className="h-4 w-4 mr-1" />
-                <span className="text-sm">pcamarajr.dev</span>
-              </a>
-              <span className="text-gray-300">•</span>
-              <a
-                href="https://github.com/pcamarajr/transcribe-with-assembly-ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-500 hover:text-brand-500 transition-colors flex items-center"
-              >
-                <Github className="h-4 w-4 mr-1" />
-                <span className="text-sm">GitHub</span>
-              </a>
-            </div>
+      <footer className="container bg-gray-50 border-t py-6">
+        <div className="flex flex-col items-center space-y-4">
+          <p className="text-center text-gray-500 text-sm">
+            {t("footer.copyright")}
+          </p>
+          <div className="flex items-center space-x-4">
+            <a
+              href="https://pcamarajr.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-brand-500 transition-colors flex items-center"
+            >
+              <span className="text-sm">pcamarajr.dev</span>
+            </a>
+            <span className="text-gray-300">•</span>
+            <a
+              href="https://github.com/pcamarajr/transcribe-with-assembly-ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-brand-500 transition-colors flex items-center"
+            >
+              <Github className="h-4 w-4 mr-1" />
+              <span className="text-sm">GitHub</span>
+            </a>
+            <span className="text-gray-300">•</span>
+            <LanguageSwitcher />
           </div>
         </div>
       </footer>

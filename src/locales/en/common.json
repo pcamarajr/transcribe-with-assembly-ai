@@ -1,0 +1,95 @@
+{
+  "appName": "Audio Scribe",
+  "appTagline": "Simple transcription with AssemblyAI",
+  "header": {
+    "configureApi": "Configure API"
+  },
+  "main": {
+    "title": "Transcribe audio easily",
+    "subtitle": "Upload your audio file and receive a high-quality transcription using AssemblyAI"
+  },
+  "footer": {
+    "copyright": "© 2025 Audio Scribe • Audio transcription with AssemblyAI",
+    "developedBy": "Developed by"
+  },
+  "apiKey": {
+    "title": "AssemblyAI API Key",
+    "description": "Configure your AssemblyAI API key to use the transcription service.",
+    "placeholder": "Enter your AssemblyAI API key",
+    "getKeyAt": "Get your API key at:",
+    "save": "Validate and Save API Key",
+    "update": "Update",
+    "remove": "Remove",
+    "removeConfirm": "Remove API key?",
+    "removeDescription": "This will remove your AssemblyAI API key. You will need to enter it again to use the transcription service.",
+    "removeAction": "Remove",
+    "cancel": "Cancel",
+    "validating": "Validating...",
+    "configured": "API key configured and securely stored",
+    "securityNote": "For security, the key is not displayed. You can update or remove it at any time.",
+    "success": "Success",
+    "savedSuccess": "API key validated and saved successfully!",
+    "removed": "Key removed",
+    "removedDescription": "Your API key has been removed.",
+    "error": "Error",
+    "validationError": "Please enter a valid API key.",
+    "invalidKey": "Invalid API key",
+    "invalidKeyDescription": "The API key provided is not valid or we couldn't connect to AssemblyAI. Please check the key and try again.",
+    "validationErrorGeneric": "An error occurred while validating the API key. Please try again later.",
+    "uploadError": "An error occurred while uploading the file. Please check your API key and try again."
+  },
+  "security": {
+    "apiKeySecurity": "API Key Security:",
+    "storedInBrowser": "Your API key is stored only in your browser (localStorage)",
+    "basicEncryption": "We use basic encryption to make access difficult for other sites",
+    "neverSent": "Your key is never sent to our servers",
+    "directCalls": "All calls to AssemblyAI are made directly from your browser"
+  },
+  "upload": {
+    "tab": "Upload",
+    "dragDrop": "Drag and drop an audio file or click to choose",
+    "supportedFormats": "Supported formats: MP3, WAV, M4A, etc.",
+    "selectFile": "Select file",
+    "uploading": "Uploading file",
+    "initiatingTranscription": "Initiating transcription...",
+    "transcriptionQueued": "You will be redirected to the transcriptions tab",
+    "transcriptionProcessing": "The transcription is being processed. You can check the status in the transcriptions tab.",
+    "transcriptionRequested": "Audio transcribing",
+    "transcriptionRequestedDesc": "File uploaded and transcription initiated. You will be redirected to track progress."
+  },
+  "transcriptions": {
+    "tab": "Transcriptions",
+    "title": "Transcriptions",
+    "refresh": "Refresh",
+    "lastUpdated": "Last updated:",
+    "updatingAutomatically": "Updating automatically...",
+    "loading": "Loading transcriptions...",
+    "none": "No transcriptions found.",
+    "requestTranscription": "Request a transcription to get started.",
+    "select": "Select a transcription to view details.",
+    "loadingTranscript": "Loading transcription...",
+    "status": "Status:",
+    "updating": "Updating...",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "transcriptionCopied": "Transcription copied to clipboard."
+  },
+  "status": {
+    "queued": "Queued",
+    "queuedDesc": "Your transcription is in the queue and will be processed soon.",
+    "processing": "Processing",
+    "processingDesc": "Your transcription is being processed. This can take from a few seconds to a few minutes, depending on the file size.",
+    "completed": "Completed",
+    "completedDesc": "Transcription completed successfully!",
+    "error": "Error",
+    "errorDesc": "An error occurred while processing the transcription.",
+    "errorDetailedDesc": "This can happen for various reasons, such as issues with the audio file or API limits. Try uploading again or check if the audio file is valid.",
+    "waiting": "Waiting for status information...",
+    "updatingEvery5Seconds": "Updating automatically every 5 seconds",
+    "waitingForUpdate": "Waiting for update..."
+  },
+  "language": {
+    "english": "English",
+    "portuguese": "Portuguese"
+  }
+}

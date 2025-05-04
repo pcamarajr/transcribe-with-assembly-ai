@@ -14,7 +14,7 @@ export type TranscriptStatus =
   | string;
 
 // Interface for transcript data
-interface TranscriptData {
+export interface TranscriptData {
   id: string;
   status: TranscriptStatus;
   created: string | Date;

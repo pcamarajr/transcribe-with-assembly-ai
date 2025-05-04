@@ -1,0 +1,95 @@
+{
+  "appName": "Audio Scribe",
+  "appTagline": "Transcrição simples com AssemblyAI",
+  "header": {
+    "configureApi": "Configurar API"
+  },
+  "main": {
+    "title": "Transcreva áudio facilmente",
+    "subtitle": "Carregue seu arquivo de áudio e receba uma transcrição de alta qualidade usando AssemblyAI"
+  },
+  "footer": {
+    "copyright": "© 2025 Audio Scribe • Transcrição de áudio com AssemblyAI",
+    "developedBy": "Desenvolvido por"
+  },
+  "apiKey": {
+    "title": "Chave API AssemblyAI",
+    "description": "Configure sua chave API da AssemblyAI para usar o serviço de transcrição.",
+    "placeholder": "Insira sua chave API da AssemblyAI",
+    "getKeyAt": "Obtenha sua chave API em:",
+    "save": "Validar e Salvar Chave API",
+    "update": "Atualizar",
+    "remove": "Remover",
+    "removeConfirm": "Remover chave API?",
+    "removeDescription": "Isso removerá sua chave API da AssemblyAI. Você precisará inseri-la novamente para usar o serviço de transcrição.",
+    "removeAction": "Remover",
+    "cancel": "Cancelar",
+    "validating": "Validando...",
+    "configured": "Chave API configurada e armazenada de forma segura",
+    "securityNote": "Por segurança, a chave não é exibida. Você pode atualizá-la ou removê-la a qualquer momento.",
+    "success": "Sucesso",
+    "savedSuccess": "Chave API validada e salva com sucesso!",
+    "removed": "Chave removida",
+    "removedDescription": "Sua chave API foi removida.",
+    "error": "Erro",
+    "validationError": "Por favor, insira uma chave API válida.",
+    "invalidKey": "Chave API inválida",
+    "invalidKeyDescription": "A chave API fornecida não é válida ou não foi possível conectar com a AssemblyAI. Por favor, verifique a chave e tente novamente.",
+    "validationErrorGeneric": "Ocorreu um erro ao validar a chave API. Por favor, tente novamente mais tarde.",
+    "uploadError": "Ocorreu um erro ao enviar o arquivo. Verifique sua chave API e tente novamente."
+  },
+  "security": {
+    "apiKeySecurity": "Segurança da sua chave API:",
+    "storedInBrowser": "Sua chave API é armazenada apenas no seu navegador (localStorage)",
+    "basicEncryption": "Usamos encriptação básica para dificultar o acesso por outros sites",
+    "neverSent": "Sua chave nunca é enviada para nossos servidores",
+    "directCalls": "Todas as chamadas para a AssemblyAI são feitas diretamente do seu navegador"
+  },
+  "upload": {
+    "tab": "Upload",
+    "dragDrop": "Arraste e solte um arquivo de áudio ou clique para escolher",
+    "supportedFormats": "Formatos suportados: MP3, WAV, M4A, etc.",
+    "selectFile": "Selecionar arquivo",
+    "uploading": "Enviando arquivo",
+    "initiatingTranscription": "Iniciando transcrição...",
+    "transcriptionQueued": "Você será redirecionado para a guia de transcrições",
+    "transcriptionProcessing": "A transcrição está sendo processada. Você pode verificar o status na guia de transcrições.",
+    "transcriptionRequested": "Transcrevendo áudio",
+    "transcriptionRequestedDesc": "Arquivo enviado e transcrição iniciada. Você será redirecionado para acompanhar o progresso."
+  },
+  "transcriptions": {
+    "tab": "Transcrições",
+    "title": "Transcrições",
+    "refresh": "Atualizar",
+    "lastUpdated": "Última atualização:",
+    "updatingAutomatically": "Atualizando automaticamente...",
+    "loading": "Carregando transcrições...",
+    "none": "Nenhuma transcrição encontrada.",
+    "requestTranscription": "Solicite uma transcrição para começar.",
+    "select": "Selecione uma transcrição para ver os detalhes.",
+    "loadingTranscript": "Carregando transcrição...",
+    "status": "Status:",
+    "updating": "Atualizando...",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "transcriptionCopied": "Transcrição copiada para a área de transferência."
+  },
+  "status": {
+    "queued": "Na fila",
+    "queuedDesc": "Sua transcrição está na fila e será processada em breve.",
+    "processing": "Processando",
+    "processingDesc": "Sua transcrição está sendo processada. Isso pode levar de alguns segundos a alguns minutos, dependendo do tamanho do arquivo.",
+    "completed": "Concluído",
+    "completedDesc": "Transcrição concluída com sucesso!",
+    "error": "Erro",
+    "errorDesc": "Ocorreu um erro ao processar a transcrição.",
+    "errorDetailedDesc": "Isso pode ocorrer por vários motivos, como problemas com o arquivo de áudio ou limites de API. Tente fazer o upload novamente ou verifique se o arquivo de áudio é válido.",
+    "waiting": "Aguardando informações de status...",
+    "updatingEvery5Seconds": "Atualizando automaticamente a cada 5 segundos",
+    "waitingForUpdate": "Aguardando atualização..."
+  },
+  "language": {
+    "english": "Inglês",
+    "portuguese": "Português"
+  }
+}

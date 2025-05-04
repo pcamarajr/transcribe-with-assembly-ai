@@ -1,47 +1,55 @@
-
-import React from 'react';
+import { TranscriptData } from "@/hooks/useTranscriptions";
 import { formatDistanceToNow } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import TranscriptStatusBadge from './TranscriptStatusBadge';
+import { enUS, ptBR } from "date-fns/locale";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import TranscriptStatusBadge from "./TranscriptStatusBadge";
 
 interface TranscriptsListProps {
-  transcripts: any[];
+  transcripts: TranscriptData[];
   selectedTranscript: string | null;
   onSelectTranscript: (transcriptId: string) => void;
 }
 
-const TranscriptsList: React.FC<TranscriptsListProps> = ({ 
-  transcripts, 
-  selectedTranscript, 
-  onSelectTranscript 
+const TranscriptsList: React.FC<TranscriptsListProps> = ({
+  transcripts,
+  selectedTranscript,
+  onSelectTranscript,
 }) => {
+  const { i18n } = useTranslation();
+
+  // Select locale based on current language
+  const locale = i18n.language === "pt" ? ptBR : enUS;
+
   return (
     <div className="space-y-2 max-h-[500px] overflow-y-auto border rounded-md p-2">
       {transcripts.map((transcript) => {
         // Prevent error with invalid date by checking if created_at is valid
-        const createdAt = new Date(transcript.created_at);
+        const createdAt = new Date(transcript.created);
         const isValidDate = !isNaN(createdAt.getTime());
-        
+
         return (
-          <div 
+          <div
             key={transcript.id}
             className={`p-2 rounded-md cursor-pointer border ${
-              selectedTranscript === transcript.id ? 'bg-brand-50 border-brand-200' : ''
+              selectedTranscript === transcript.id
+                ? "bg-brand-50 border-brand-200"
+                : ""
             }`}
             onClick={() => onSelectTranscript(transcript.id)}
           >
             <div className="flex justify-between items-center">
               <p className="font-medium truncate text-sm">
-                {transcript.audio_url.split('/').pop() || 'Transcrição'}
+                {transcript.audio_url.split("/").pop() || "Transcrição"}
               </p>
               <div className="text-xs">
                 <TranscriptStatusBadge status={transcript.status} />
               </div>
             </div>
             <p className="text-xs text-gray-500">
-              {isValidDate 
-                ? formatDistanceToNow(createdAt, { addSuffix: true, locale: ptBR })
-                : 'Data desconhecida'}
+              {isValidDate
+                ? formatDistanceToNow(createdAt, { addSuffix: true, locale })
+                : "Data desconhecida"}
             </p>
           </div>
         );

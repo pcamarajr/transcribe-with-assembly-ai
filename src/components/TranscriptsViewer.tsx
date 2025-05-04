@@ -9,6 +9,7 @@ import {
 import { useTranscriptions } from "@/hooks/useTranscriptions";
 import { FileText, Loader, RefreshCw } from "lucide-react";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import TranscriptDetail from "./transcripts/TranscriptDetail";
 import TranscriptsList from "./transcripts/TranscriptsList";
 
@@ -21,6 +22,7 @@ const TranscriptsViewer: React.FC<TranscriptsViewerProps> = ({
   refreshTrigger,
   currentTranscriptId,
 }) => {
+  const { t } = useTranslation();
   const {
     transcripts,
     loading,
@@ -40,7 +42,7 @@ const TranscriptsViewer: React.FC<TranscriptsViewerProps> = ({
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center">
             <FileText className="w-5 h-5 mr-2" />
-            Transcrições
+            {t("transcriptions.title")}
           </div>
           <Button
             variant="outline"
@@ -53,19 +55,21 @@ const TranscriptsViewer: React.FC<TranscriptsViewerProps> = ({
             ) : (
               <FileText className="w-4 h-4 mr-2" />
             )}
-            Atualizar
+            {t("transcriptions.refresh")}
           </Button>
         </CardTitle>
         <CardDescription className="flex items-center justify-between text-xs">
           <div>
             {lastUpdated ? (
-              <span>Última atualização: {lastUpdated}</span>
+              <span>
+                {t("transcriptions.lastUpdated")} {lastUpdated}
+              </span>
             ) : null}
           </div>
           {isPolling && (
             <div className="flex items-center text-amber-500">
               <RefreshCw className="w-3 h-3 mr-1 animate-spin" />
-              Atualizando automaticamente...
+              {t("transcriptions.updatingAutomatically")}
             </div>
           )}
         </CardDescription>
@@ -74,16 +78,16 @@ const TranscriptsViewer: React.FC<TranscriptsViewerProps> = ({
         {loading ? (
           <div className="py-8 flex flex-col items-center justify-center">
             <Loader className="h-8 w-8 animate-spin text-brand-500 mb-4" />
-            <p className="text-sm text-gray-500">Carregando transcrições...</p>
+            <p className="text-sm text-gray-500">
+              {t("transcriptions.loading")}
+            </p>
           </div>
         ) : transcripts.length === 0 ? (
           <div className="py-8 flex flex-col items-center justify-center">
             <FileText className="h-12 w-12 text-gray-300 mb-4" />
-            <p className="text-sm text-gray-500">
-              Nenhuma transcrição encontrada.
-            </p>
+            <p className="text-sm text-gray-500">{t("transcriptions.none")}</p>
             <p className="text-xs text-gray-400">
-              Solicite uma transcrição para começar.
+              {t("transcriptions.requestTranscription")}
             </p>
           </div>
         ) : (

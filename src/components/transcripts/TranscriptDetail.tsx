@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { TranscriptStatus } from "@/hooks/useTranscriptions";
 import { Check, Clock, Copy, FileText, Loader, RefreshCw } from "lucide-react";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import TranscriptStatusBadge from "./TranscriptStatusBadge";
 
 interface TranscriptDetailProps {
@@ -21,6 +22,7 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
   loadingTranscript,
   isPolling = false,
 }) => {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState<boolean>(false);
   const { toast } = useToast();
 
@@ -29,8 +31,8 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
       navigator.clipboard.writeText(transcriptText);
       setCopied(true);
       toast({
-        title: "Copiado!",
-        description: "Transcrição copiada para a área de transferência.",
+        title: t("transcriptions.copied"),
+        description: t("transcriptions.transcriptionCopied"),
       });
 
       setTimeout(() => setCopied(false), 2000);
@@ -40,15 +42,15 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
   const getStatusMessage = () => {
     switch (transcriptStatus) {
       case "queued":
-        return "Sua transcrição está na fila e será processada em breve.";
+        return t("status.queuedDesc");
       case "processing":
-        return "Sua transcrição está sendo processada. Isso pode levar de alguns segundos a alguns minutos, dependendo do tamanho do arquivo.";
+        return t("status.processingDesc");
       case "completed":
-        return "Transcrição concluída com sucesso!";
+        return t("status.completedDesc");
       case "error":
-        return "Ocorreu um erro ao processar a transcrição.";
+        return t("status.errorDesc");
       default:
-        return "Aguardando informações de status...";
+        return t("status.waiting");
     }
   };
 
@@ -56,9 +58,7 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
     return (
       <div className="p-6 flex flex-col items-center justify-center border rounded-md">
         <FileText className="h-8 w-8 text-gray-300 mb-4" />
-        <p className="text-sm text-gray-500">
-          Selecione uma transcrição para ver os detalhes.
-        </p>
+        <p className="text-sm text-gray-500">{t("transcriptions.select")}</p>
       </div>
     );
   }
@@ -67,7 +67,9 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
     return (
       <div className="py-8 flex flex-col items-center justify-center">
         <Loader className="h-8 w-8 animate-spin text-brand-500 mb-4" />
-        <p className="text-sm text-gray-500">Carregando transcrição...</p>
+        <p className="text-sm text-gray-500">
+          {t("transcriptions.loadingTranscript")}
+        </p>
       </div>
     );
   }
@@ -77,12 +79,13 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <p className="font-medium mr-2">
-            Status: <TranscriptStatusBadge status={transcriptStatus || ""} />
+            {t("transcriptions.status")}{" "}
+            <TranscriptStatusBadge status={transcriptStatus || ""} />
           </p>
           {isPolling && (
             <span className="text-xs text-amber-500 flex items-center">
               <RefreshCw className="w-3 h-3 mr-1 animate-spin" />
-              Atualizando...
+              {t("transcriptions.updating")}
             </span>
           )}
         </div>
@@ -91,12 +94,12 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
             {copied ? (
               <>
                 <Check className="w-4 h-4 mr-2 text-green-500" />
-                Copiado!
+                {t("transcriptions.copied")}
               </>
             ) : (
               <>
                 <Copy className="w-4 h-4 mr-2" />
-                Copiar
+                {t("transcriptions.copy")}
               </>
             )}
           </Button>
@@ -119,8 +122,8 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
 
           <p className="text-sm font-medium mb-2">
             {transcriptStatus === "processing"
-              ? "Processando transcrição..."
-              : "Transcrição na fila..."}
+              ? t("status.processing")
+              : t("status.queued")}
           </p>
 
           <p className="text-xs text-gray-600 text-center mb-2">
@@ -130,10 +133,12 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
           {isPolling ? (
             <p className="text-xs text-amber-600 flex items-center">
               <RefreshCw className="w-3 h-3 mr-1 animate-spin" />
-              Atualizando automaticamente a cada 5 segundos
+              {t("status.updatingEvery5Seconds")}
             </p>
           ) : (
-            <p className="text-xs text-gray-500">Aguardando atualização...</p>
+            <p className="text-xs text-gray-500">
+              {t("status.waitingForUpdate")}
+            </p>
           )}
         </div>
       ) : transcriptStatus === "completed" && transcriptText ? (
@@ -146,19 +151,15 @@ const TranscriptDetail: React.FC<TranscriptDetailProps> = ({
       ) : transcriptStatus === "error" ? (
         <div className="p-6 flex flex-col items-center justify-center border rounded-md border-red-200 bg-red-50">
           <p className="text-red-500 font-medium mb-2">
-            Ocorreu um erro ao processar a transcrição.
+            {t("status.errorDesc")}
           </p>
           <p className="text-xs text-red-400 text-center">
-            Isso pode ocorrer por vários motivos, como problemas com o arquivo
-            de áudio ou limites de API. Tente fazer o upload novamente ou
-            verifique se o arquivo de áudio é válido.
+            {t("status.errorDetailedDesc")}
           </p>
         </div>
       ) : (
         <div className="p-6 flex flex-col items-center justify-center border rounded-md">
-          <p className="text-gray-500">
-            Nenhum texto de transcrição disponível.
-          </p>
+          <p className="text-gray-500">{t("transcriptions.none")}</p>
         </div>
       )}
     </div>

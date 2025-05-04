@@ -35,6 +35,7 @@ import {
   X,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ApiKeyFormProps {
   onKeySet: () => void;
@@ -42,6 +43,7 @@ interface ApiKeyFormProps {
 }
 
 const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
+  const { t } = useTranslation();
   const [apiKey, setApiKeyState] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(!hasApiKey());
   const [isValidating, setIsValidating] = useState<boolean>(false);
@@ -59,8 +61,8 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
     if (!apiKey.trim()) {
       toast({
         variant: "destructive",
-        title: "Erro",
-        description: "Por favor, insira uma chave API válida.",
+        title: t("apiKey.error"),
+        description: t("apiKey.validationError"),
       });
       return;
     }
@@ -77,25 +79,23 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
         setApiKeyState(""); // Clear the input for security
         setIsEditing(false);
         toast({
-          title: "Sucesso",
-          description: "Chave API validada e salva com sucesso!",
+          title: t("apiKey.success"),
+          description: t("apiKey.savedSuccess"),
         });
         onKeySet();
       } else {
         toast({
           variant: "destructive",
-          title: "Chave API inválida",
-          description:
-            "A chave API fornecida não é válida ou não foi possível conectar com a AssemblyAI. Por favor, verifique a chave e tente novamente.",
+          title: t("apiKey.invalidKey"),
+          description: t("apiKey.invalidKeyDescription"),
         });
       }
     } catch (error) {
       console.error("Error validating API key:", error);
       toast({
         variant: "destructive",
-        title: "Erro de validação",
-        description:
-          "Ocorreu um erro ao validar a chave API. Por favor, tente novamente mais tarde.",
+        title: t("apiKey.error"),
+        description: t("apiKey.validationErrorGeneric"),
       });
     } finally {
       setIsValidating(false);
@@ -108,8 +108,8 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
     setIsEditing(true);
     setValidationResult(null);
     toast({
-      title: "Chave removida",
-      description: "Sua chave API foi removida.",
+      title: t("apiKey.removed"),
+      description: t("apiKey.removedDescription"),
     });
     if (onKeyRemoved) {
       onKeyRemoved();
@@ -121,12 +121,9 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
       <CardHeader>
         <CardTitle className="flex items-center">
           <Key className="w-5 h-5 mr-2" />
-          Chave API AssemblyAI
+          {t("apiKey.title")}
         </CardTitle>
-        <CardDescription>
-          Configure sua chave API da AssemblyAI para usar o serviço de
-          transcrição.
-        </CardDescription>
+        <CardDescription>{t("apiKey.description")}</CardDescription>
       </CardHeader>
       <CardContent>
         {isEditing ? (
@@ -135,7 +132,7 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
               <div className="relative">
                 <Input
                   type="text"
-                  placeholder="Insira sua chave API da AssemblyAI"
+                  placeholder={t("apiKey.placeholder")}
                   value={apiKey}
                   onChange={(e) => {
                     setApiKeyState(e.target.value);
@@ -161,7 +158,7 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
                 )}
               </div>
               <p className="text-xs text-gray-500">
-                Obtenha sua chave API em:{" "}
+                {t("apiKey.getKeyAt")}{" "}
                 <a
                   href="https://www.assemblyai.com/dashboard/signup"
                   className="text-brand-500 hover:underline"
@@ -173,7 +170,7 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
               </p>
               {validationResult === false && (
                 <p className="text-xs text-red-500 mt-1">
-                  Chave API inválida. Por favor, verifique e tente novamente.
+                  {t("apiKey.invalidKey")}
                 </p>
               )}
             </div>
@@ -181,21 +178,14 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
             <div className="bg-blue-50 p-3 rounded-md border border-blue-100 flex items-start">
               <Shield className="w-4 h-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
               <div className="text-xs text-blue-700">
-                <p className="font-medium mb-1">Segurança da sua chave API:</p>
+                <p className="font-medium mb-1">
+                  {t("security.apiKeySecurity")}
+                </p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li>
-                    Sua chave API é armazenada apenas no seu navegador
-                    (localStorage)
-                  </li>
-                  <li>
-                    Usamos encriptação básica para dificultar o acesso por
-                    outros sites
-                  </li>
-                  <li>Sua chave nunca é enviada para nossos servidores</li>
-                  <li>
-                    Todas as chamadas para a AssemblyAI são feitas diretamente
-                    do seu navegador
-                  </li>
+                  <li>{t("security.storedInBrowser")}</li>
+                  <li>{t("security.basicEncryption")}</li>
+                  <li>{t("security.neverSent")}</li>
+                  <li>{t("security.directCalls")}</li>
                 </ul>
               </div>
             </div>
@@ -207,10 +197,11 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
             >
               {isValidating ? (
                 <>
-                  <Loader className="w-4 h-4 mr-2 animate-spin" /> Validando...
+                  <Loader className="w-4 h-4 mr-2 animate-spin" />{" "}
+                  {t("apiKey.validating")}
                 </>
               ) : (
-                "Validar e Salvar Chave API"
+                t("apiKey.save")
               )}
             </Button>
           </div>
@@ -229,7 +220,7 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
                 </div>
               </div>
               <Button variant="outline" onClick={() => setIsEditing(true)}>
-                Atualizar
+                {t("apiKey.update")}
               </Button>
 
               <AlertDialog>
@@ -243,38 +234,34 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Remover chave API?</AlertDialogTitle>
+                    <AlertDialogTitle>
+                      {t("apiKey.removeConfirm")}
+                    </AlertDialogTitle>
                     <AlertDialogDescription>
-                      Isso removerá sua chave API da AssemblyAI. Você precisará
-                      inseri-la novamente para usar o serviço de transcrição.
+                      {t("apiKey.removeDescription")}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogCancel>{t("apiKey.cancel")}</AlertDialogCancel>
                     <AlertDialogAction
                       onClick={handleRemove}
                       className="bg-red-500 hover:bg-red-600"
                     >
-                      Remover
+                      {t("apiKey.removeAction")}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
             </div>
 
-            <div className="flex items-start">
-              <div className="mr-2">
-                <Shield className="w-4 h-4 text-green-500 mt-0.5" />
+            <div className="bg-green-50 p-3 rounded-md border border-green-100">
+              <div className="flex items-center text-green-700 mb-2">
+                <CheckCircle className="w-4 h-4 mr-2" />
+                <p className="text-sm font-medium">{t("apiKey.configured")}</p>
               </div>
-              <div>
-                <p className="text-xs text-green-600 font-medium">
-                  ✓ Chave API configurada e armazenada de forma segura
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Por segurança, a chave não é exibida. Você pode atualizá-la ou
-                  removê-la a qualquer momento.
-                </p>
-              </div>
+              <p className="text-xs text-green-600">
+                {t("apiKey.securityNote")}
+              </p>
             </div>
           </div>
         )}
