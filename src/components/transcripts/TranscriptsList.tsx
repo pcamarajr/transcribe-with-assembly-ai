@@ -30,12 +30,6 @@ const TranscriptsList: React.FC<TranscriptsListProps> = ({
   return (
     <div className="space-y-2 max-h-[500px] overflow-y-auto border rounded-md p-2">
       {transcripts.map((transcript) => {
-        // Prevent error with invalid date by checking if created_at is valid
-        const createdAt = new Date(transcript.created);
-        const isValidDate = !isNaN(createdAt.getTime());
-
-        console.log(transcript);
-
         return (
           <div
             key={transcript.id}
@@ -47,9 +41,7 @@ const TranscriptsList: React.FC<TranscriptsListProps> = ({
             onClick={() => onSelectTranscript(transcript.id)}
           >
             <div className="flex justify-between items-center">
-              <p className="font-medium truncate text-sm">
-                {transcript.audio_url.split("/").pop() || "Transcrição"}
-              </p>
+              <p className="font-medium truncate text-sm">{transcript.id}</p>
               <div className="text-xs">
                 <TranscriptStatusBadge status={transcript.status} />
               </div>
