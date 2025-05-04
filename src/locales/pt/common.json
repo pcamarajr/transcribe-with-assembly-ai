@@ -9,8 +9,7 @@
     "subtitle": "Carregue seu arquivo de áudio e receba uma transcrição de alta qualidade usando AssemblyAI"
   },
   "footer": {
-    "copyright": "© 2025 Audio Scribe • Transcrição de áudio com AssemblyAI",
-    "developedBy": "Desenvolvido por"
+    "copyright": "© {{year}} Audio Scribe • Transcrição de áudio com AssemblyAI"
   },
   "apiKey": {
     "title": "Chave API AssemblyAI",
@@ -55,7 +54,9 @@
     "transcriptionQueued": "Você será redirecionado para a guia de transcrições",
     "transcriptionProcessing": "A transcrição está sendo processada. Você pode verificar o status na guia de transcrições.",
     "transcriptionRequested": "Transcrevendo áudio",
-    "transcriptionRequestedDesc": "Arquivo enviado e transcrição iniciada. Você será redirecionado para acompanhar o progresso."
+    "transcriptionRequestedDesc": "Arquivo enviado e transcrição iniciada. Você será redirecionado para acompanhar o progresso.",
+    "error": "Formato de arquivo inválido",
+    "errorDescription": "Por favor, envie apenas arquivos de áudio."
   },
   "transcriptions": {
     "tab": "Transcrições",
@@ -90,6 +91,7 @@
   },
   "language": {
     "english": "Inglês",
-    "portuguese": "Português"
+    "portuguese": "Português",
+    "switch": "Mudar idioma"
   }
 }

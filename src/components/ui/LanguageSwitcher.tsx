@@ -33,7 +33,7 @@ export const LanguageSwitcher = () => {
         <Button
           variant="ghost"
           className="flex items-center gap-1 px-2"
-          aria-label="Change language"
+          aria-label={t("language.switch")}
         >
           <CurrentFlag className="h-4 w-6 mr-1" />
           <span>{currentLanguageName}</span>

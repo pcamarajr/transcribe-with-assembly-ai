@@ -154,7 +154,7 @@ const Index = () => {
       <footer className="container bg-gray-50 border-t py-6">
         <div className="flex flex-col items-center space-y-4">
           <p className="text-center text-gray-500 text-sm">
-            {t("footer.copyright")}
+            {t("footer.copyright", { year: new Date().getFullYear() })}
           </p>
           <div className="flex items-center space-x-4">
             <a

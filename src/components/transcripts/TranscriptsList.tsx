@@ -1,8 +1,14 @@
 import { TranscriptData } from "@/hooks/useTranscriptions";
-import { formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { enUS, ptBR } from "date-fns/locale";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 import TranscriptStatusBadge from "./TranscriptStatusBadge";
 
 interface TranscriptsListProps {
@@ -28,6 +34,8 @@ const TranscriptsList: React.FC<TranscriptsListProps> = ({
         const createdAt = new Date(transcript.created);
         const isValidDate = !isNaN(createdAt.getTime());
 
+        console.log(transcript);
+
         return (
           <div
             key={transcript.id}
@@ -46,11 +54,21 @@ const TranscriptsList: React.FC<TranscriptsListProps> = ({
                 <TranscriptStatusBadge status={transcript.status} />
               </div>
             </div>
-            <p className="text-xs text-gray-500">
-              {isValidDate
-                ? formatDistanceToNow(createdAt, { addSuffix: true, locale })
-                : "Data desconhecida"}
-            </p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <p className="text-xs text-gray-500">
+                    {formatDistanceToNow(transcript.created, {
+                      addSuffix: true,
+                      locale,
+                    })}
+                  </p>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {format(new Date(transcript.created), "PPPPpp", { locale })}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         );
       })}

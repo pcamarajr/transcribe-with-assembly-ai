@@ -229,6 +229,7 @@ const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onKeySet, onKeyRemoved }) => {
                     variant="ghost"
                     className="ml-1 text-red-500 hover:text-red-700 hover:bg-red-50"
                   >
+                    <span className="sr-only">{t("apiKey.remove")}</span>
                     <Trash className="w-4 h-4" />
                   </Button>
                 </AlertDialogTrigger>

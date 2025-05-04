@@ -9,8 +9,7 @@
     "subtitle": "Upload your audio file and receive a high-quality transcription using AssemblyAI"
   },
   "footer": {
-    "copyright": "© 2025 Audio Scribe • Audio transcription with AssemblyAI",
-    "developedBy": "Developed by"
+    "copyright": "© {{year}} Audio Scribe • Audio transcription with AssemblyAI"
   },
   "apiKey": {
     "title": "AssemblyAI API Key",
@@ -55,7 +54,9 @@
     "transcriptionQueued": "You will be redirected to the transcriptions tab",
     "transcriptionProcessing": "The transcription is being processed. You can check the status in the transcriptions tab.",
     "transcriptionRequested": "Audio transcribing",
-    "transcriptionRequestedDesc": "File uploaded and transcription initiated. You will be redirected to track progress."
+    "transcriptionRequestedDesc": "File uploaded and transcription initiated. You will be redirected to track progress.",
+    "error": "Invalid file format",
+    "errorDescription": "Please upload a valid audio file."
   },
   "transcriptions": {
     "tab": "Transcriptions",
@@ -90,6 +91,7 @@
   },
   "language": {
     "english": "English",
-    "portuguese": "Portuguese"
+    "portuguese": "Portuguese",
+    "switch": "Change language"
   }
 }

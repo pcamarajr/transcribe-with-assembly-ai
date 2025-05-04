@@ -40,8 +40,8 @@ const AudioUploader: React.FC<AudioUploaderProps> = ({
     if (!file.type.startsWith("audio/")) {
       toast({
         variant: "destructive",
-        title: t("apiKey.error"),
-        description: "Por favor, envie apenas arquivos de áudio.",
+        title: t("upload.error"),
+        description: t("upload.errorDescription"),
       });
       return;
     }
