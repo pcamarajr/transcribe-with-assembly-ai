@@ -9,7 +9,11 @@
     "subtitle": "Upload your audio file and receive a high-quality transcription using AssemblyAI"
   },
   "footer": {
-    "copyright": "© {{year}} Audio Scribe • Audio transcription with AssemblyAI"
+    "copyright": "© {{year}} Audio Scribe • Audio transcription with AssemblyAI",
+    "developerSite": "pcamarajr.dev",
+    "developerSiteUrl": "https://pcamarajr.dev",
+    "githubText": "GitHub",
+    "githubUrl": "https://github.com/pcamarajr/transcribe-with-assembly-ai"
   },
   "apiKey": {
     "title": "AssemblyAI API Key",
@@ -73,7 +77,15 @@
     "updating": "Updating...",
     "copy": "Copy",
     "copied": "Copied!",
-    "transcriptionCopied": "Transcription copied to clipboard."
+    "transcriptionCopied": "Transcription copied to clipboard.",
+    "fetchError": "Error loading transcriptions",
+    "fetchErrorDesc": "Could not fetch the list of transcriptions. Please check your API key.",
+    "completedNotification": "Transcription completed",
+    "completedNotificationDesc": "The audio transcription has been completed successfully.",
+    "errorNotification": "Transcription error",
+    "errorNotificationDesc": "An error occurred while processing the audio transcription.",
+    "fetchDetailsError": "Error loading transcription",
+    "fetchDetailsErrorDesc": "Could not fetch the transcription details."
   },
   "status": {
     "queued": "Queued",
@@ -92,6 +104,15 @@
   "language": {
     "english": "English",
     "portuguese": "Portuguese",
-    "switch": "Change language"
+    "switch": "Change language",
+    "en": "en",
+    "pt": "pt",
+    "enShort": "EN",
+    "ptShort": "PT"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "returnHome": "Return to Home"
   }
 }

@@ -164,22 +164,22 @@ const Index = () => {
           </p>
           <div className="flex items-center space-x-4">
             <a
-              href="https://pcamarajr.dev"
+              href={t("footer.developerSiteUrl")}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-brand-500 transition-colors flex items-center"
             >
-              <span className="text-sm">pcamarajr.dev</span>
+              <span className="text-sm">{t("footer.developerSite")}</span>
             </a>
             <span className="text-gray-300">•</span>
             <a
-              href="https://github.com/pcamarajr/transcribe-with-assembly-ai"
+              href={t("footer.githubUrl")}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-brand-500 transition-colors flex items-center"
             >
               <Github className="h-4 w-4 mr-1" />
-              <span className="text-sm">GitHub</span>
+              <span className="text-sm">{t("footer.githubText")}</span>
             </a>
             <span className="text-gray-300">•</span>
             <LanguageSwitcher />

@@ -9,7 +9,11 @@
     "subtitle": "Carregue seu arquivo de áudio e receba uma transcrição de alta qualidade usando AssemblyAI"
   },
   "footer": {
-    "copyright": "© {{year}} Audio Scribe • Transcrição de áudio com AssemblyAI"
+    "copyright": "© {{year}} Audio Scribe • Transcrição de áudio com AssemblyAI",
+    "developerSite": "pcamarajr.dev",
+    "developerSiteUrl": "https://pcamarajr.dev",
+    "githubText": "GitHub",
+    "githubUrl": "https://github.com/pcamarajr/transcribe-with-assembly-ai"
   },
   "apiKey": {
     "title": "Chave API AssemblyAI",
@@ -73,7 +77,15 @@
     "updating": "Atualizando...",
     "copy": "Copiar",
     "copied": "Copiado!",
-    "transcriptionCopied": "Transcrição copiada para a área de transferência."
+    "transcriptionCopied": "Transcrição copiada para a área de transferência.",
+    "fetchError": "Erro ao carregar transcrições",
+    "fetchErrorDesc": "Não foi possível obter a lista de transcrições. Por favor, verifique sua chave API.",
+    "completedNotification": "Transcrição concluída",
+    "completedNotificationDesc": "A transcrição do áudio foi concluída com sucesso.",
+    "errorNotification": "Erro na transcrição",
+    "errorNotificationDesc": "Ocorreu um erro ao processar a transcrição do áudio.",
+    "fetchDetailsError": "Erro ao carregar transcrição",
+    "fetchDetailsErrorDesc": "Não foi possível obter os detalhes da transcrição."
   },
   "status": {
     "queued": "Na fila",
@@ -92,6 +104,15 @@
   "language": {
     "english": "Inglês",
     "portuguese": "Português",
-    "switch": "Mudar idioma"
+    "switch": "Mudar idioma",
+    "en": "en",
+    "pt": "pt",
+    "enShort": "EN",
+    "ptShort": "PT"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Ops! Página não encontrada",
+    "returnHome": "Voltar para a Home"
   }
 }

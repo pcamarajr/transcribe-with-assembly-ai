@@ -4,6 +4,7 @@ import {
   listTranscripts,
 } from "@/services/assemblyAiService";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // Define the possible transcript statuses
 export type TranscriptStatus =
@@ -41,6 +42,7 @@ export const useTranscriptions = (
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [pollingEnabled, setPollingEnabled] = useState<boolean>(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Fetch all transcripts
   const fetchTranscripts = useCallback(async () => {
@@ -53,14 +55,13 @@ export const useTranscriptions = (
       console.error("Error fetching transcripts:", error);
       toast({
         variant: "destructive",
-        title: "Erro ao carregar transcrições",
-        description:
-          "Não foi possível obter a lista de transcrições. Por favor, verifique sua chave API.",
+        title: t("transcriptions.fetchError"),
+        description: t("transcriptions.fetchErrorDesc"),
       });
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  }, [toast, t]);
 
   // Fetch details for a specific transcript
   const fetchTranscriptDetails = useCallback(
@@ -87,8 +88,8 @@ export const useTranscriptions = (
           // Show a toast for completed transcripts
           if (result.status === "completed") {
             toast({
-              title: "Transcrição concluída",
-              description: "A transcrição do áudio foi concluída com sucesso.",
+              title: t("transcriptions.completedNotification"),
+              description: t("transcriptions.completedNotificationDesc"),
             });
           }
 
@@ -96,9 +97,8 @@ export const useTranscriptions = (
           if (result.status === "error") {
             toast({
               variant: "destructive",
-              title: "Erro na transcrição",
-              description:
-                "Ocorreu um erro ao processar a transcrição do áudio.",
+              title: t("transcriptions.errorNotification"),
+              description: t("transcriptions.errorNotificationDesc"),
             });
           }
         } else {
@@ -111,8 +111,8 @@ export const useTranscriptions = (
         console.error("Error fetching transcript details:", error);
         toast({
           variant: "destructive",
-          title: "Erro ao carregar transcrição",
-          description: "Não foi possível obter os detalhes da transcrição.",
+          title: t("transcriptions.fetchDetailsError"),
+          description: t("transcriptions.fetchDetailsErrorDesc"),
         });
         setPollingEnabled(false);
         return "error";
@@ -120,7 +120,7 @@ export const useTranscriptions = (
         setLoadingTranscript(false);
       }
     },
-    [toast]
+    [toast, t]
   );
 
   // Handle selecting a transcript

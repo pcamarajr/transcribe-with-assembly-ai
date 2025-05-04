@@ -24,8 +24,11 @@ export const LanguageSwitcher = () => {
   };
 
   // Determine which flag to show based on current language
-  const CurrentFlag = i18n.language === "pt" ? Flags.BR : Flags.US;
-  const currentLanguageName = i18n.language === "pt" ? "PT" : "EN";
+  const CurrentFlag = i18n.language === t("language.pt") ? Flags.BR : Flags.US;
+  const currentLanguageName =
+    i18n.language === t("language.pt")
+      ? t("language.ptShort")
+      : t("language.enShort");
 
   return (
     <DropdownMenu>
@@ -41,14 +44,14 @@ export const LanguageSwitcher = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
-          onClick={() => changeLanguage("en")}
+          onClick={() => changeLanguage(t("language.en"))}
           className="flex items-center"
         >
           <Flags.US className="h-4 w-6 mr-2" />
           {t("language.english")}
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => changeLanguage("pt")}
+          onClick={() => changeLanguage(t("language.pt"))}
           className="flex items-center"
         >
           <Flags.BR className="h-4 w-6 mr-2" />
