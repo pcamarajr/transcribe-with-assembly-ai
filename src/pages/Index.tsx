@@ -52,43 +52,49 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="bg-white border-b">
-        <div className="container py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <FileAudio className="h-6 w-6 text-brand-500 mr-2" />
-            <h1 className="text-xl font-semibold">{t("appName")}</h1>
-          </div>
-          <div className="flex items-center space-x-2">
-            {isApiKeySet && (
-              <Dialog
-                open={isApiKeyDialogOpen}
-                onOpenChange={setIsApiKeyDialogOpen}
-              >
-                <DialogTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="flex items-center gap-2"
-                  >
-                    <Settings className="h-4 w-4" />
-                    <span className="text-sm">{t("header.configureApi")}</span>
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>{t("apiKey.title")}</DialogTitle>
-                  </DialogHeader>
-                  <div className="py-4">
-                    <ApiKeyForm
-                      onKeySet={handleApiKeySet}
-                      onKeyRemoved={handleApiKeyRemoved}
-                    />
-                  </div>
-                </DialogContent>
-              </Dialog>
-            )}
-          </div>
-          <div>
-            <span className="text-sm text-gray-500">{t("appTagline")}</span>
+        <div className="container py-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center">
+              <FileAudio className="h-6 w-6 text-brand-500 mr-2" />
+              <h1 className="text-xl font-semibold">{t("appName")}</h1>
+            </div>
+
+            <div className="text-center sm:text-right">
+              <span className="text-sm text-gray-500">{t("appTagline")}</span>
+            </div>
+
+            <div className="flex items-center">
+              {isApiKeySet && (
+                <Dialog
+                  open={isApiKeyDialogOpen}
+                  onOpenChange={setIsApiKeyDialogOpen}
+                >
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      <Settings className="h-4 w-4" />
+                      <span className="text-sm">
+                        {t("header.configureApi")}
+                      </span>
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>{t("apiKey.title")}</DialogTitle>
+                    </DialogHeader>
+                    <div className="py-4">
+                      <ApiKeyForm
+                        onKeySet={handleApiKeySet}
+                        onKeyRemoved={handleApiKeyRemoved}
+                      />
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              )}
+            </div>
           </div>
         </div>
       </header>
